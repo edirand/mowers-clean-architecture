@@ -1,4 +1,4 @@
-name: dotnet
+name: build
 
 on: [push]
 
@@ -21,8 +21,17 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: build
+      - name: Build
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+      - name: Code coverage analysis
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
