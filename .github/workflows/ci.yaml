@@ -24,8 +24,8 @@ jobs:
       - name: Install dotnet dependencies
         run: dotnet restore
 
-#      - name: Install dotnet tools
-#        run: dotnet tool install dotnet-stryker --tool-path ./tools
+      - name: Install dotnet tools
+        run: dotnet tool install dotnet-stryker --tool-path ./tools
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
@@ -42,5 +42,5 @@ jobs:
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
       
-#      - name: Run mutation testing
-#        run: .\tools\dotnet-stryker -r dashboard
+      - name: Run mutation testing
+        run: .\tools\dotnet-stryker -r dashboard
