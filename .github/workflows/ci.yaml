@@ -18,8 +18,11 @@ jobs:
         with: 
           dotnet-version: ${{matrix.dotnet-version}}
 
-      - name: Install dependencies
+      - name: Install dotnet dependencies
         run: dotnet restore
+
+      - name: Install dotnet tools
+        run: dotnet tool install dotnet-stryker --tool-path ./tools
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
