@@ -1,0 +1,44 @@
+name: build
+
+on: [push]
+
+jobs: 
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['6.x']
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version}}
+        uses: actions/setup-dotnet@v3
+        with: 
+          dotnet-version: ${{matrix.dotnet-version}}
+
+      - name: Install dotnet dependencies
+        run: dotnet restore
+
+      - name: Install dotnet tools
+        run: dotnet tool install dotnet-stryker --tool-path ./tools
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+      - name: Code coverage analysis
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} 
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
+      
+      - name: Run mutation testing
+        run: .\tools\dotnet-stryker -r dashboard
+        
