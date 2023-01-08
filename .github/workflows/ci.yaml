@@ -43,4 +43,4 @@ jobs:
           verbose: true # optional (default = false)
       
       - name: Run mutation testing
-        run: ./tools/dotnet-stryker -r dashboard
+        run: ./tools/dotnet-stryker -r dashboard --dashboard-api-key ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
