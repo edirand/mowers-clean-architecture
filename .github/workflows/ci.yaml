@@ -1,6 +1,9 @@
 name: build
 
-on: [push]
+on: 
+  pull_request:
+    branches:
+    - main
 
 jobs: 
   build:
@@ -18,8 +21,11 @@ jobs:
         with: 
           dotnet-version: ${{matrix.dotnet-version}}
 
-      - name: Install dependencies
+      - name: Install dotnet dependencies
         run: dotnet restore
+
+      - name: Install dotnet tools
+        run: dotnet tool install dotnet-stryker --tool-path ./tools
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
@@ -35,3 +41,6 @@ jobs:
           name: codecov-umbrella # optional
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
+      
+      - name: Run mutation testing
+        run: ./tools/dotnet-stryker -r dashboard --dashboard-api-key ${{ secrets.STRYKER_DASHBOARD_API_KEY }} --config-file ./tests/stryker-config.json
