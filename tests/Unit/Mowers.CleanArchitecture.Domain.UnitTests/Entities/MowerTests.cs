@@ -13,7 +13,8 @@ public class MowerTests
     [InlineData(Direction.N, Direction.W)]
     [InlineData(Direction.W, Direction.S)]
     [InlineData(Direction.S, Direction.E)]
-    [InlineData(Direction.E, Direction.N)]
+    [InlineData(Direction.E, Direction.N)]    
+    [Trait("Category", "UnitTest")]
     public void ShouldTurnLeft(Direction orientation, Direction expected)
     {
         var mower = new Mower(0, 0, orientation);
@@ -26,6 +27,7 @@ public class MowerTests
     [InlineData(Direction.E, Direction.S)]
     [InlineData(Direction.S, Direction.W)]
     [InlineData(Direction.W, Direction.N)]
+    [Trait("Category", "UnitTest")]
     public void ShouldTurnRight(Direction orientation, Direction expected)
     {
         var mower = new Mower(0, 0, orientation);
@@ -38,6 +40,7 @@ public class MowerTests
     [InlineData(Direction.S, 1, 0)]
     [InlineData(Direction.E, 2, 1)]
     [InlineData(Direction.W, 0, 1)]
+    [Trait("Category", "UnitTest")]
     public void ShouldMoveForward(Direction orientation, int expectedX, int expectedY)
     {
         var mower = new Mower(1, 1, orientation);
@@ -50,6 +53,7 @@ public class MowerTests
     [InlineData(0, 0, Direction.S)]
     [InlineData(5, 0, Direction.E)]
     [InlineData(0, 5, Direction.N)]
+    [Trait("Category", "UnitTest")]
     public void ShouldStayInPositionIfOutsideOfTheLawnAfterMoving(int x, int y, Direction orientation)
     {
         var lawn = new RectangularLawn(5, 5);
@@ -59,6 +63,7 @@ public class MowerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public void ShouldStayInPositionIfCollideWithOtherMower()
     {
         var lawn = new RectangularLawn(5, 5);
@@ -75,6 +80,7 @@ public class MowerTests
     [InlineData(2, 4, Direction.S)]
     [InlineData(3, 2, Direction.E)]
     [InlineData(1, 1, Direction.W)]
+    [Trait("Category", "UnitTest")]
     public void ShouldPrintStateToString(int x, int y, Direction orientation)
     {
         var mower = new Mower(x, y, orientation);
