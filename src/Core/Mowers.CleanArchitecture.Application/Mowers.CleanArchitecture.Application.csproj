@@ -7,7 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Mowers\Commands" />
+      <PackageReference Include="MediatR" Version="11.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mowers.CleanArchitecture.Domain\Mowers.CleanArchitecture.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Contracts\Infrastructure" />
     </ItemGroup>
 
 </Project>
