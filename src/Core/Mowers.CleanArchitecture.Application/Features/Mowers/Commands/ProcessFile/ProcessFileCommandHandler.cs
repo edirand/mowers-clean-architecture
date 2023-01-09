@@ -29,6 +29,7 @@ public class ProcessFileCommandHandler : IRequestHandler<ProcessFileCommand, Pro
         {
             var mowerLine = reader.ReadLine().Split(' ');
             var mower = factory.CreateMower(new Point(int.Parse(mowerLine[0]), int.Parse(mowerLine[1])), Enum.Parse<Direction>(mowerLine[2], true));
+            lawn.AddMower(mower);
             var instructions = reader.ReadLine();
             foreach (var instruction in instructions)
             {

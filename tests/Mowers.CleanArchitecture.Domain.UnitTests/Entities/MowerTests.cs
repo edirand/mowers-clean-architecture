@@ -58,6 +58,18 @@ public class MowerTests
         mower.Position.ShouldBe(new Point(x, y));
     }
 
+    [Fact]
+    public void ShouldStayInPositionIfCollideWithOtherMower()
+    {
+        var lawn = new RectangularLawn(5, 5);
+        var mower = new Mower(0, 0, Direction.N);
+        lawn.AddMower(mower);
+        var collisionMower = new Mower(0, 1, Direction.N);
+        lawn.AddMower(collisionMower);
+        mower.MoveOn(lawn);
+        mower.Position.ShouldBe(new Point(0, 0));
+    }
+
     [Theory]
     [InlineData(0, 0, Direction.N)]
     [InlineData(2, 4, Direction.S)]

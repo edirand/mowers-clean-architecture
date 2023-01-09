@@ -6,6 +6,11 @@
 public interface IMower
 {
     /// <summary>
+    /// The current position of the mower.
+    /// </summary>
+    public Point Position { get; }
+    
+    /// <summary>
     /// Turns left.
     /// </summary>
     public void TurnLeft();
