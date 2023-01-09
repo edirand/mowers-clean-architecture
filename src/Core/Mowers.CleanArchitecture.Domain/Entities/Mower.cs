@@ -7,10 +7,8 @@ public class Mower : IMower
 {
     private static readonly List<Direction> Directions = new() { Direction.N, Direction.E, Direction.S, Direction.W };
     private int _currentDirection;
-    
-    /// <summary>
-    /// The current position of the mower.
-    /// </summary>
+
+    /// <inheritdoc />
     public Point Position { get; private set; }
     
     /// <summary>
@@ -48,6 +46,7 @@ public class Mower : IMower
         };
 
         if (!lawn.IsInside(nextPosition)) return;
+        if(lawn.IsOccupied(nextPosition)) return;
 
         Position = nextPosition;
     }
