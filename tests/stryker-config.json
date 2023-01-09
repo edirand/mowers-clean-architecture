@@ -1,7 +1,6 @@
 ﻿{
   "stryker-config":
   {
-    "project": "Mowers.CleanArchitecture.Domain.csproj",
     "project-info": { 
       "name": "github.com/edirand/mowers-clean-architecture",
       "version": "main"
