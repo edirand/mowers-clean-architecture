@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Core\Mowers.CleanArchitecture.Domain\Mowers.CleanArchitecture.Domain.csproj" />
+      <ProjectReference Include="..\..\..\src\Core\Mowers.CleanArchitecture.Domain\Mowers.CleanArchitecture.Domain.csproj" />
     </ItemGroup>
 
 </Project>

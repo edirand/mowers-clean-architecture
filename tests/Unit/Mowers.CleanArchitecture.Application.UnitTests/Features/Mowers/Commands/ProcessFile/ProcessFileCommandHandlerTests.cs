@@ -14,6 +14,7 @@ namespace Mowers.CleanArchitecture.Application.UnitTests.Features.Mowers.Command
 public class ProcessFileCommandHandlerTests
 {
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldProcessFile()
     {
         var handler = new ProcessFileCommandHandler();
@@ -37,7 +38,8 @@ public class ProcessFileCommandHandlerTests
     }
 
      [Fact]
-    public async Task ShouldProcessFileWithMowerOutsideOfLawn()
+     [Trait("Category", "UnitTest")]
+     public async Task ShouldProcessFileWithMowerOutsideOfLawn()
     {
         var handler = new ProcessFileCommandHandler();
         using var stream = new MemoryStream();
@@ -57,6 +59,7 @@ public class ProcessFileCommandHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldProcessFileWithMowersCollision()
     {
         var handler = new ProcessFileCommandHandler();
