@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Unicode;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,7 @@ public class FilesController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    
+
     /// <summary>
     /// Initializes a new instance of <see cref="FilesController"/> class.
     /// </summary>
@@ -39,10 +41,19 @@ public class FilesController : ControllerBase
     /// <param name="file">The file containing instructions to process.</param>
     /// <returns>The final position and orientation of each mower.</returns>
     [HttpPost(Name = "post-files")]
-    [ProducesResponseType(typeof(FileProcessingResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(FileProcessingResult), StatusCodes.Status200OK, "application/json")]
+    [Produces("application/json", "text/plain")]
     public async Task<IActionResult> PostFile([Required] IFormFile file)
     {
         var result = await _mediator.Send(new ProcessFileCommand(file.OpenReadStream()));
-        return Ok(_mapper.Map<FileProcessingResult>(result));
+        if (Request.Headers.Accept == "application/json") return Ok(_mapper.Map<FileProcessingResult>(result));
+
+        var sb = new StringBuilder();
+        foreach (var resultMower in result.Mowers)
+        {
+            sb.AppendLine(resultMower);
+        }
+
+        return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain");
     }
 }

@@ -20,11 +20,13 @@ public class FilesControllerTests : IClassFixture<TestWebApplicationFactory<Prog
 
     [Fact]
     [Trait("Category", "IntegrationTest")]
-    public async Task ReturnsSuccessfulResult()
+    public async Task ReturnsSuccessfulResultAsJson()
     {
         var client = _factory.CreateClient();
         var instructionFile = File.OpenRead("Samples/SampleInstructionFile.txt");
         var expectedResultFile = File.ReadLines("Samples/SampleInstructionFileExpectedResult.txt");
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+        
         var response = await client.PostAsync("/api/files", new MultipartFormDataContent
         {
             { new StreamContent(instructionFile), "file", "InstructionFile.txt" }
@@ -38,6 +40,28 @@ public class FilesControllerTests : IClassFixture<TestWebApplicationFactory<Prog
 
         result.ShouldNotBeNull();
         result.Mowers.ShouldBe(expectedResultFile);
+    }
+    
+    [Fact]
+    [Trait("Category", "IntegrationTest")]
+    public async Task ReturnsSuccessfulResultAsTextPlain()
+    {
+        var client = _factory.CreateClient();
+        var instructionFile = File.OpenRead("Samples/SampleInstructionFile.txt");
+        var expectedResultFile = await File.ReadAllTextAsync("Samples/SampleInstructionFileExpectedResult.txt");
+        
+        client.DefaultRequestHeaders.Add("Accept", "text/plain");
+        var response = await client.PostAsync("/api/files", new MultipartFormDataContent
+        {
+            { new StreamContent(instructionFile), "file", "InstructionFile.txt" }
+        });
+
+        response.EnsureSuccessStatusCode();
+
+        var responseBody = await response.Content.ReadAsStringAsync();
+        
+        responseBody.ShouldNotBeNull();
+        responseBody.ShouldBe(expectedResultFile);
     }
 
     private static T Deserialize<T>(string content) => JsonSerializer.Deserialize<T>(content,
