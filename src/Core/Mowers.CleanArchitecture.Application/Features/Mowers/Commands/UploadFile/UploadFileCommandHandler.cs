@@ -35,6 +35,6 @@ public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, Uploa
         var path = await _fileStorage.Store(request.Data);
         var fileProcessing = new FileProcessing{Id = Guid.NewGuid(), FilePath = path, CreatedAt = DateTime.Now};
         await _processingRepository.Add(fileProcessing);
-        return new UploadFileCommandResponse(fileProcessing.Id);
+        return new UploadFileCommandResponse(fileProcessing.Id, fileProcessing.CreatedAt);
     }
 }

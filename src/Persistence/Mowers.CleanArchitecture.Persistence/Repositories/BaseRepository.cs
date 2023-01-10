@@ -31,7 +31,8 @@ public class BaseRepository<TEntity, TDocument> : IAsyncRepository<TEntity>
     /// <inheritdoc />
     public async Task<TEntity?> GetById(Guid id)
     {
-        var filter = Builders<TDocument>.Filter.Eq(x => x.Id, id);
+        var filter = Builders<TDocument>.Filter.Eq(x=>x.Id, id.ToString());
+        
         var t = await (
             await MongoDbRepository
                 .GetCollection<TDocument>()
@@ -64,14 +65,14 @@ public class BaseRepository<TEntity, TDocument> : IAsyncRepository<TEntity>
     public async Task Update(TEntity entity)
     {
         var document = Mapper.Map<TDocument>(entity);
-        var filter = Builders<TDocument>.Filter.Eq(x => x.Id, document.Id);
+        var filter = Builders<TDocument>.Filter.Eq(x=>x.Id, document.Id.ToString());
         await MongoDbRepository.GetCollection<TDocument>().ReplaceOneAsync(filter, document);
     }
 
     /// <inheritdoc />
     public async Task Delete(TEntity entity)
     {
-        var filter = Builders<TDocument>.Filter.Eq(x => x.Id, entity.Id);
+        var filter = Builders<TDocument>.Filter.Eq(x=>x.Id, entity.Id.ToString());
         await MongoDbRepository.GetCollection<TDocument>().DeleteOneAsync(filter);
     }
 }

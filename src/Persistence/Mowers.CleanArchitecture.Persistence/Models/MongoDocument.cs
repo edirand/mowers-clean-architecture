@@ -11,8 +11,8 @@ public class MongoDocument
     /// <summary>
     /// The identifier of the document.
     /// </summary>
-    [BsonId, BsonGuidRepresentation(GuidRepresentation.Standard)]
-    public Guid Id { get; set; }
+    [BsonId, BsonRepresentation(BsonType.String)]
+    public string Id { get; set; }
     
     /// <summary>
     /// The date and time of the creation of the document.

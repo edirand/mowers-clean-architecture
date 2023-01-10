@@ -48,7 +48,7 @@ public class UploadFileCommandHandlerTests
     {
         var result = await Act();
         result.ShouldNotBeNull();
-        result.ProcessingId.ShouldNotBe(Guid.Empty);
+        result.Id.ShouldNotBe(Guid.Empty);
     }
 
     private async Task<UploadFileCommandResponse> Act() =>

@@ -16,7 +16,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<ProcessFileCommandResponse, FileProcessingResult>();
-        CreateMap<UploadFileCommandResponse, FileUploadResult>()
-            .ForMember(x=>x.Id,  exp => exp.MapFrom(y=>y.ProcessingId.ToString()));
+        CreateMap<UploadFileCommandResponse, FileProcessing>();
+        CreateMap<Application.Features.Mowers.Queries.GetFileProcessing.FileProcessingResult, FileProcessing>();
     }
 }
