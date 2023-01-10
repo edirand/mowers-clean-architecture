@@ -11,6 +11,7 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly IMediator _mediator;
+    private const int RunDelayMs = 1000;
 
     /// <summary>
     /// Initializes a new instance of <see cref="Worker"/>.
@@ -31,13 +32,44 @@ public class Worker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            var filesToProcess = await _mediator.Send(new GetNotCompletedFileProcessingQuery(), stoppingToken);
+            await Task.Delay(RunDelayMs, stoppingToken);
             
-            foreach (var fileId in filesToProcess.Ids)
+            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+            var notCompletedFileProcessing = await LoadNotCompletedFiles(stoppingToken);
+            if(notCompletedFileProcessing?.Ids == null) continue;
+
+            foreach (var fileId in notCompletedFileProcessing.Ids)
             {
-                await _mediator.Send(new ProcessStoredFileCommand(fileId), stoppingToken);
+                await ProcessFile(fileId, stoppingToken);
             }
+        }
+    }
+
+    private async Task<NotCompletedFileProcessing?> LoadNotCompletedFiles(CancellationToken stoppingToken)
+    {
+        try
+        {
+            var filesToProcess = await _mediator.Send(new GetNotCompletedFileProcessingQuery(), stoppingToken);
+            return filesToProcess;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Loading of not completed files failed: {Exception}", e);
+        }
+
+        return null;
+    }
+
+    private async Task ProcessFile(Guid fileId, CancellationToken stoppingToken)
+    {
+        try
+        {
+            await _mediator.Send(new ProcessStoredFileCommand(fileId), stoppingToken);
+            _logger.LogInformation("Processing of file {FileId} completed", fileId);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Processing of file {FileId} failed: {Exception}", fileId, e);
         }
     }
 }
