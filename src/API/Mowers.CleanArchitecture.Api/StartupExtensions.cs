@@ -1,5 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Mowers.CleanArchitecture.Application;
+using Mowers.CleanArchitecture.Infrastructure;
+using Mowers.CleanArchitecture.Persistence;
 
 namespace Mowers.CleanArchitecture.Api;
 
@@ -9,6 +11,8 @@ public static class StartupExtensions
     {
         builder.Services
             .AddApplicationServices()
+            .AddPersistenceServices(builder.Configuration)
+            .AddInfrastructureServices()
             .AddControllers()
             .Services
             .AddRouting(c => { c.LowercaseUrls = true; })

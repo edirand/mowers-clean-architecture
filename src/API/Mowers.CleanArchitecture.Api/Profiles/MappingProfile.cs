@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Mowers.CleanArchitecture.Api.Models;
 using Mowers.CleanArchitecture.Application.Features.Mowers.Commands.ProcessFile;
+using Mowers.CleanArchitecture.Application.Features.Mowers.Commands.UploadFile;
 
 namespace Mowers.CleanArchitecture.Api.Profiles;
 
@@ -15,5 +16,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<ProcessFileCommandResponse, FileProcessingResult>();
+        CreateMap<UploadFileCommandResponse, FileUploadResult>()
+            .ForMember(x=>x.Id,  exp => exp.MapFrom(y=>y.ProcessingId.ToString()));
     }
 }
