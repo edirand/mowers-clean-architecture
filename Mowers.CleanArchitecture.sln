@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{03A58B20-4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{BEB750DB-CCC3-4809-A3CE-8D59EA66C4B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Api.IntegrationTests", "tests\Mowers.CleanArchitecture.Api.IntegrationTests\Mowers.CleanArchitecture.Api.IntegrationTests.csproj", "{94D2EC40-282B-4B97-832C-89B920DD6F2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Api.IntegrationTests", "tests\Integration\Mowers.CleanArchitecture.Api.IntegrationTests\Mowers.CleanArchitecture.Api.IntegrationTests.csproj", "{94D2EC40-282B-4B97-832C-89B920DD6F2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{52F95FD1-9EF7-4AA8-B6EA-B1C831A19B5C}"
 EndProject

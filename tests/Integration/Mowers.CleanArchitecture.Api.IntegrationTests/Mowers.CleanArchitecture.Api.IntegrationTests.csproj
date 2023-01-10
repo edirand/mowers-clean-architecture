@@ -24,16 +24,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\API\Mowers.CleanArchitecture.Api\Mowers.CleanArchitecture.Api.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="Samples\SampleInstructionFile.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Samples\SampleInstructionFileExpectedResult.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\src\API\Mowers.CleanArchitecture.Api\Mowers.CleanArchitecture.Api.csproj" />
     </ItemGroup>
 
 </Project>
