@@ -1,18 +1,18 @@
 version: "3.9"
-services:
+services:    
   mongo:
     image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27017:27017
     networks:
       - mowers_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongo_data_volume:/data/db
       - mongo_configdb_volume:/data/configdb
+    restart: always  
 
   api: 
     image: ${DOCKER_REGISTRY-}api
@@ -21,15 +21,16 @@ services:
       dockerfile: src/API/Mowers.CleanArchitecture.Api/Dockerfile
     ports:
       - 5000:80
+    networks:
+      - mowers_network
     environment:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Development
-    networks:
-      - mowers_network
     volumes: 
       - file_storage_volume:/tmp
     depends_on:
       - mongo
+    restart: always  
 
   worker:
     image: ${DOCKER_REGISTRY-}worker
@@ -38,15 +39,61 @@ services:
       dockerfile: src/API/Mower.CleanArchitecture.FileProcessorWorker/Dockerfile
     networks:
       - mowers_network
+    environment:
+      - ASPNETCORE_URLS=http://+:5001
+      - ASPNETCORE_ENVIRONMENT=Development
     volumes: 
       - file_storage_volume:/tmp
     depends_on:
       - mongo
+    restart: always  
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    networks:
+      - mowers_network
+    volumes:
+      - ./prometheus/:/etc/prometheus
+      - prometheus_data:/prometheus
+    restart: always  
+
+  jaeger: 
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+    networks:
+      - mowers_network
+    restart: always  
+
+  healthcheckui:
+    image: xabarilcoding/healthchecksui
+    ports:
+      - 5002:80
+    networks:
+      - mowers_network
+    environment:
+      - HealthChecksUI:HealthChecks:0:Name=API container
+      - HealthChecksUI:HealthChecks:0:Uri=http://api:80/health
+      - HealthChecksUI:HealthChecks:1:Name=Worker container
+      - HealthChecksUI:HealthChecks:1:Uri=http://worker:5001/health
+    depends_on:
+      - api
+      - worker
+    restart: always  
 
 volumes:
   file_storage_volume:
   mongo_data_volume:
   mongo_configdb_volume:
+  prometheus_data:
 
 networks:
   mowers_network:
