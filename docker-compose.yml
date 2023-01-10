@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    networks:
+      - mowers_network
+    volumes:
+      - mongo_volume:/data/db
+
+  api: 
+    image: ${DOCKER_REGISTRY-}api
+    build: 
+      context: .
+      dockerfile: src/API/Mowers.CleanArchitecture.Api/Dockerfile
+    ports:
+      - 5000:80
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - mowers_network
+    volumes: 
+      - file_storage_volume:/tmp
+    depends_on:
+      - mongo
+
+  worker:
+    image: ${DOCKER_REGISTRY-}worker
+    build: 
+      context: .
+      dockerfile: src/API/Mower.CleanArchitecture.FileProcessorWorker/Dockerfile
+    networks:
+      - mowers_network
+    volumes: 
+      - file_storage_volume:/tmp
+    depends_on:
+      - mongo
+
+volumes:
+  file_storage_volume:
+  mongo_volume:
+
+networks:
+  mowers_network:
+    driver: bridge
+    
