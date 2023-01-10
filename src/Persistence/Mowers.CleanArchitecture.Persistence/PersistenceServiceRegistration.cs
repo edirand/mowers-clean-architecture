@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Mowers.CleanArchitecture.Application.Contracts.Persistence;
@@ -30,13 +31,12 @@ public static class PersistenceServiceRegistration
         };
 
         ConventionRegistry.Register("Custom conventions", conventions, x => true);
-
-        var settings = configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
         
         return services
-                .AddSingleton<IMongoClient>(new MongoClient(settings!.ConnectionString))
+                .Configure<MongoDbSettings>(configuration.GetSection("MongoDbSettings"))
+                .AddSingleton<IMongoClient>(provider => new MongoClient(provider.GetRequiredService<IOptions<MongoDbSettings>>().Value.ConnectionString))
                 .AddSingleton<IMongoDatabase>(provider =>
-                    provider.GetRequiredService<IMongoClient>().GetDatabase(settings.Database))
+                    provider.GetRequiredService<IMongoClient>().GetDatabase(provider.GetRequiredService<IOptions<MongoDbSettings>>().Value.Database))
                 .AddSingleton<MongoDbRepository>()
                 .AddSingleton<IProcessingRepository, FileProcessingRepository>()
             ;

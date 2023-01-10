@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Mowers.CleanArchitecture.Application.Contracts.Persistence;
@@ -25,6 +24,7 @@ public class GetNotCompletedFileProcessingQueryHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldLoadNotCompletedFileProcessingFromRepository()
     {
         await Act();
@@ -32,6 +32,7 @@ public class GetNotCompletedFileProcessingQueryHandlerTests
     }
     
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldReturnNotCompletedFileProcessing()
     {
         var result = await Act();

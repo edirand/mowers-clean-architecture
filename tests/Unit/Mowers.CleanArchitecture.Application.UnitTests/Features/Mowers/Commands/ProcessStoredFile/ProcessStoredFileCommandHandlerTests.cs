@@ -39,6 +39,7 @@ public class ProcessStoredFileCommandHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldLoadFileProcessingById()
     {
         var id = Guid.NewGuid();
@@ -47,6 +48,7 @@ public class ProcessStoredFileCommandHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldThrowExceptionWhenFileProcessingDoesNotExist()
     {
         var id = Guid.NewGuid();
@@ -55,6 +57,7 @@ public class ProcessStoredFileCommandHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldLoadFileDataWhenFileProcessingExist()
     {
         await Act();
@@ -62,6 +65,7 @@ public class ProcessStoredFileCommandHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldSaveProcessingWhenCompleted()
     {
         FileProcessing? savedFileProcessing = null;

@@ -27,7 +27,7 @@ public class FilesControllerTests : IClassFixture<TestWebApplicationFactory<Prog
         var expectedResultFile = File.ReadLines("Samples/SampleInstructionFileExpectedResult.txt");
         client.DefaultRequestHeaders.Add("Accept", "application/json");
         
-        var response = await client.PostAsync("/api/files", new MultipartFormDataContent
+        var response = await client.PostAsync("/api/v1/files", new MultipartFormDataContent
         {
             { new StreamContent(instructionFile), "file", "InstructionFile.txt" }
         });
@@ -51,7 +51,7 @@ public class FilesControllerTests : IClassFixture<TestWebApplicationFactory<Prog
         var expectedResultFile = await File.ReadAllTextAsync("Samples/SampleInstructionFileExpectedResult.txt");
         
         client.DefaultRequestHeaders.Add("Accept", "text/plain");
-        var response = await client.PostAsync("/api/files", new MultipartFormDataContent
+        var response = await client.PostAsync("/api/v1/files", new MultipartFormDataContent
         {
             { new StreamContent(instructionFile), "file", "InstructionFile.txt" }
         });
