@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Mowers.CleanArchitecture.Api.Swagger;
+namespace Mowers.CleanArchitecture.Api.Extensions.Swagger;
 
 /// <summary>
 /// Options to configure swagger document generation.

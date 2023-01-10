@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Mowers.CleanArchitecture.Api.Swagger;
+using Mowers.CleanArchitecture.Api.Extensions;
+using Mowers.CleanArchitecture.Api.Extensions.Swagger;
 using Mowers.CleanArchitecture.Application;
 using Mowers.CleanArchitecture.Infrastructure;
 using Mowers.CleanArchitecture.Persistence;
@@ -36,6 +38,7 @@ public static class StartupExtensions
             .AddVersioning()
             .AddSwagger()
             .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
+            .ConfigureProblemDetails()
             ;
 
 
@@ -83,6 +86,7 @@ public static class StartupExtensions
         var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
         app
             .UseHttpsRedirection()
+            .UseProblemDetails()
             .UseRouting()
             .UseCors("Open")
             .UseSwagger()
