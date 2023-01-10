@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/fdd80940f49d1270959c/maintainability)](https://codeclimate.com/repos/63bb3635d9ad0d7e450000f6/maintainability)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fedirand%2Fmowers-clean-architecture%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/edirand/mowers-clean-architecture/main)
 
-An implementation of the mowers problem using clean architecture solution in C#.
+An implementation of the mowers problem using clean architecture solution in C#. The exercise statement can be found [here](docs/01_exercise_statement.md).
 
 ## How to run
 
@@ -23,6 +23,8 @@ It will setup the multi-container app **mowers-clean-architecture** composed of:
 - **mowers_network**: a network to connect the containers
 
 You can then open http://localhost:5000/swagger to interact with the API.
+
+You can find an example of file to import in the API in the [exercise statement](docs/01_exercise_statement.md).
 
 ## Development process
 
@@ -45,7 +47,7 @@ A worker runs asynchronously to get all the processing requests that have not ye
 
 The solution is based on Clean Architecture template. 
 
-![architecture](doc/imgs/Architecture.png)
+![architecture](docs/imgs/Architecture.png)
 
 ### Core
 
