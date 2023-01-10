@@ -1,12 +1,21 @@
-﻿using Hellang.Middleware.ProblemDetails;
+﻿using System.Reflection;
+using HealthChecks.UI.Client;
+using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Mowers.CleanArchitecture.Api.Extensions;
 using Mowers.CleanArchitecture.Api.Extensions.Swagger;
 using Mowers.CleanArchitecture.Application;
 using Mowers.CleanArchitecture.Infrastructure;
+using Mowers.CleanArchitecture.Infrastructure.Traces;
 using Mowers.CleanArchitecture.Persistence;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace Mowers.CleanArchitecture.Api;
 
@@ -26,6 +35,7 @@ public static class StartupExtensions
             .AddInfrastructureServices()
             .AddControllers()
             .Services
+            .ConfigureOpenTelemetry(builder.Configuration)
             .AddRouting(c => { c.LowercaseUrls = true; })
             .AddCors(options =>
             {
@@ -39,10 +49,23 @@ public static class StartupExtensions
             .AddSwagger()
             .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
             .ConfigureProblemDetails()
+            .ConfigureHealthChecks()
             ;
 
 
         return builder;
+    }
+
+    private static IServiceCollection ConfigureHealthChecks(this IServiceCollection services)
+    {
+        return services
+                .AddHealthChecks()
+                .AddCheck("API", () => HealthCheckResult.Healthy(), new[] { "API" })
+                .Services
+                .AddHealthChecksUI(setup => setup.AddHealthCheckEndpoint("health", "/health"))
+                .AddInMemoryStorage()
+                .Services
+            ;
     }
 
     private static IServiceCollection AddVersioning(this IServiceCollection services)
@@ -78,6 +101,48 @@ public static class StartupExtensions
             .ConfigureOptions<ConfigureSwaggerOptions>();
     }
 
+    private static IServiceCollection ConfigureOpenTelemetry(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
+            Assembly.GetExecutingAssembly().GetName().Name!,
+            serviceVersion: Assembly.GetExecutingAssembly().GetName().Version!.ToString());
+        var jaegerConfig = configuration.GetSection("Observability:Jaeger").Get<JaegerConfiguration>();
+
+        return services
+                .AddOpenTelemetry()
+                .WithTracing(builder =>
+                    builder
+                        .AddConsoleExporter()
+                        .SetResourceBuilder(resourceBuilder)
+                        .AddAspNetCoreInstrumentation(i =>
+                            i.Filter = context => !string.IsNullOrWhiteSpace(context.Request.Path.Value)
+                                                  && !context.Request.Path.Value.Contains("health",
+                                                      StringComparison.InvariantCultureIgnoreCase)
+                        )
+                        .AddMongoDBInstrumentation()
+                        .AddJaegerExporter(options =>
+                        {
+                            options.AgentHost = jaegerConfig!.Host;
+                            options.AgentPort = jaegerConfig.Port;
+                        })
+                        .AddSource("Api")
+                )
+                .WithMetrics(builder =>
+                    builder
+                        .SetResourceBuilder(resourceBuilder)
+                        .AddAspNetCoreInstrumentation(i =>
+                            i.Filter = (_, context) => !string.IsNullOrWhiteSpace(context.Request.Path.Value)
+                                                       && context.Request.Path.Value.Contains("health",
+                                                           StringComparison.InvariantCultureIgnoreCase)
+                        )
+                        .AddPrometheusExporter()
+                )
+                .StartWithHost()
+                .Services
+            ;
+    }
+
     /// <summary>
     /// Configures the application.
     /// </summary>
@@ -88,6 +153,8 @@ public static class StartupExtensions
             .UseHttpsRedirection()
             .UseProblemDetails()
             .UseRouting()
+            .UseEndpoints(builder => builder.MapHealthChecksUI())
+            .UseOpenTelemetryPrometheusScrapingEndpoint()
             .UseCors("Open")
             .UseSwagger()
             .UseSwaggerUI(c =>
@@ -101,6 +168,11 @@ public static class StartupExtensions
             })
             ;
 
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
         app.MapControllers();
 
         return app;
