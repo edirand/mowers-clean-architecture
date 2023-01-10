@@ -1,10 +1,29 @@
 ﻿{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:48285",
+      "launchUrl": "http://localhost:48285/swagger",
+      "sslPort": 44333
+    }
+  },
   "profiles": {
-    "Mower.CleanArchitecture.FileProcessorWorker": {
+    "Mowers.CleanArchitecture.FileProcessorWorker": {
       "commandName": "Project",
       "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7190;http://localhost:5093",
+      "launchUrl": "https://localhost:7190/metrics",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
