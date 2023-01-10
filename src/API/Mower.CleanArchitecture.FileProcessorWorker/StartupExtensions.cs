@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Mowers.CleanArchitecture.Application;
 using Mowers.CleanArchitecture.Infrastructure;
@@ -34,7 +36,7 @@ public static class StartupExtensions
             .Services
             .AddRouting()
             .AddHealthChecks()
-            .AddCheck("health", () => HealthCheckResult.Healthy("UP"))
+            .AddCheck("Worker", () => HealthCheckResult.Healthy(), new []{"Worker"})
             ;
     }
 
@@ -90,7 +92,12 @@ public static class StartupExtensions
             .UseOpenTelemetryPrometheusScrapingEndpoint()
             ;
 
-        app.MapHealthChecks("/health");
+        
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
         app.MapControllers();
 
         return app;
