@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Mower.CleanArchitecture.FileProcessorWorker-C28225F4-0C2C-41B5-9490-667004AB3A3A</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\Mowers.CleanArchitecture.Application\Mowers.CleanArchitecture.Application.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Mowers.CleanArchitecture.Infrastructure\Mowers.CleanArchitecture.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Persistence\Mowers.CleanArchitecture.Persistence\Mowers.CleanArchitecture.Persistence.csproj" />
+    </ItemGroup>
+</Project>

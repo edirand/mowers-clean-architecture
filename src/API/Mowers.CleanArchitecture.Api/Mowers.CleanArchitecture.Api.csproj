@@ -23,10 +23,14 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Core\Mowers.CleanArchitecture.Application\Mowers.CleanArchitecture.Application.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Mowers.CleanArchitecture.Infrastructure\Mowers.CleanArchitecture.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Persistence\Mowers.CleanArchitecture.Persistence\Mowers.CleanArchitecture.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
       <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
     </ItemGroup>

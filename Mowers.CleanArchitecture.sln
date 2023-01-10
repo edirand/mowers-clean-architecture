@@ -28,6 +28,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Api.IntegrationTests", "tests\Mowers.CleanArchitecture.Api.IntegrationTests\Mowers.CleanArchitecture.Api.IntegrationTests.csproj", "{94D2EC40-282B-4B97-832C-89B920DD6F2F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{52F95FD1-9EF7-4AA8-B6EA-B1C831A19B5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{70C5FCFB-E133-4E87-B027-0079AF1924E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Persistence", "src\Persistence\Mowers.CleanArchitecture.Persistence\Mowers.CleanArchitecture.Persistence.csproj", "{1EC532A8-AA05-4214-9E54-FD4C907F1E26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Infrastructure", "src\Infrastructure\Mowers.CleanArchitecture.Infrastructure\Mowers.CleanArchitecture.Infrastructure.csproj", "{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mower.CleanArchitecture.FileProcessorWorker", "src\API\Mower.CleanArchitecture.FileProcessorWorker\Mower.CleanArchitecture.FileProcessorWorker.csproj", "{5B257CE2-DB9E-4D6D-8965-61307D4289D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +72,18 @@ Global
 		{94D2EC40-282B-4B97-832C-89B920DD6F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94D2EC40-282B-4B97-832C-89B920DD6F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D2EC40-282B-4B97-832C-89B920DD6F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC532A8-AA05-4214-9E54-FD4C907F1E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC532A8-AA05-4214-9E54-FD4C907F1E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC532A8-AA05-4214-9E54-FD4C907F1E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC532A8-AA05-4214-9E54-FD4C907F1E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DCF03BED-AE30-4D0C-AD0C-C991F3A2D3C6} = {B1C40E99-83EB-43B9-A262-80E80E68E594}
@@ -76,5 +98,10 @@ Global
 		{69B5EE4A-E3E1-4CF9-B513-BFD760DB33C3} = {03A58B20-4D10-441B-97CD-A47E759508A0}
 		{BEB750DB-CCC3-4809-A3CE-8D59EA66C4B9} = {67AFD5DF-565E-4405-9B88-66436E163F6C}
 		{94D2EC40-282B-4B97-832C-89B920DD6F2F} = {BEB750DB-CCC3-4809-A3CE-8D59EA66C4B9}
+		{52F95FD1-9EF7-4AA8-B6EA-B1C831A19B5C} = {B1C40E99-83EB-43B9-A262-80E80E68E594}
+		{70C5FCFB-E133-4E87-B027-0079AF1924E3} = {B1C40E99-83EB-43B9-A262-80E80E68E594}
+		{1EC532A8-AA05-4214-9E54-FD4C907F1E26} = {70C5FCFB-E133-4E87-B027-0079AF1924E3}
+		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A} = {52F95FD1-9EF7-4AA8-B6EA-B1C831A19B5C}
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9} = {7D595064-9A68-42A3-9EAE-034EE4F85616}
 	EndGlobalSection
 EndGlobal

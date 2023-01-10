@@ -1,25 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Unicode;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mowers.CleanArchitecture.Api.Models;
 using Mowers.CleanArchitecture.Application.Features.Mowers.Commands.ProcessFile;
 
-namespace Mowers.CleanArchitecture.Api.Controllers;
+namespace Mowers.CleanArchitecture.Api.Controllers.v1;
 
 /// <summary>
 /// A controller to import files.
 /// </summary>
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
 [Produces("application/json")]
 public class FilesController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-
+    
     /// <summary>
     /// Initializes a new instance of <see cref="FilesController"/> class.
     /// </summary>
