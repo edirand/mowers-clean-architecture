@@ -14,7 +14,7 @@ public class LocalFileSystem : IFileStorage
     /// </summary>
     public LocalFileSystem()
     {
-        var info = new DirectoryInfo(Directory);  
+        var info = new DirectoryInfo(Path.Combine(Path.GetTempPath(),Directory));  
         if (!info.Exists) {  
             info.Create();  
         }
@@ -24,10 +24,17 @@ public class LocalFileSystem : IFileStorage
     public Task<string> Store(Stream data)
     {
         var fileName = Path.GetRandomFileName();
-        var filePath = $"{Directory}/{fileName}";
+        var filePath = Path.Combine(Path.GetTempPath(), Directory, fileName);
         using var outputFileStream = new FileStream(filePath, FileMode.Create);
         data.CopyTo(outputFileStream);
 
         return Task.FromResult(fileName);
+    }
+
+    /// <inheritdoc />
+    public Stream Load(string filePath)
+    {
+        var fileFullPath = Path.Combine(Path.GetTempPath(), Directory, filePath);
+        return File.OpenRead(fileFullPath);
     }
 }

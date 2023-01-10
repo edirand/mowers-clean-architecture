@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MongoDB.Driver;
 using Mowers.CleanArchitecture.Application.Contracts.Persistence;
 using Mowers.CleanArchitecture.Domain.Entities;
 using Mowers.CleanArchitecture.Persistence.Models;
@@ -17,5 +18,13 @@ public class FileProcessingRepository : BaseRepository<FileProcessing, FileProce
     /// <param name="mapper">An instance of <see cref="IMapper"/> to map <see cref="FileProcessing"/> to <see cref="FileProcessingDocument"/>.</param>
     public FileProcessingRepository(MongoDbRepository repository, IMapper mapper) : base(repository, mapper)
     {
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<FileProcessing>> ListNotCompletedProcessing()
+    {
+        var filter = Builders<FileProcessingDocument>.Filter.Eq(x => x.Completed, false);
+        var items = await MongoDbRepository.GetCollection<FileProcessingDocument>().FindAsync(filter);
+        return Mapper.Map<IReadOnlyList<FileProcessing>>(await items.ToListAsync());
     }
 }

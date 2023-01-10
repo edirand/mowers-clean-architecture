@@ -37,8 +37,8 @@ public static class PersistenceServiceRegistration
                 .AddSingleton<IMongoClient>(new MongoClient(settings!.ConnectionString))
                 .AddSingleton<IMongoDatabase>(provider =>
                     provider.GetRequiredService<IMongoClient>().GetDatabase(settings.Database))
-                .AddScoped<MongoDbRepository>()
-                .AddScoped<IProcessingRepository, FileProcessingRepository>()
+                .AddSingleton<MongoDbRepository>()
+                .AddSingleton<IProcessingRepository, FileProcessingRepository>()
             ;
     }
 }

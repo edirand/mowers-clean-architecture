@@ -4,3 +4,16 @@
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fedirand%2Fmowers-clean-architecture%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/edirand/mowers-clean-architecture/main)
 
 An implementation of the mowers problem using clean architecture solution in C#.
+
+
+## TODO
+
+- [X] Add a worker to run file processing asynchronously
+- [X] Add command to run stored file processing
+- [x] Add a query to get not completed file processing 
+- [ ] Add logs
+- [ ] Add metrics
+- [ ] Add opentelemetry 
+- [ ] Add TUs
+- [ ] Add documentation
+- [ ] Improve builds
