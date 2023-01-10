@@ -1,7 +1,12 @@
+using Microsoft.AspNetCore.Builder;
 using Mower.CleanArchitecture.FileProcessorWorker;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(StartupExtensions.ConfigureServices)
-    .Build();
+var builder = WebApplication.CreateBuilder(args);
+builder.ConfigureServices();
 
-await host.RunAsync();
+var app = builder
+        .Build()
+        .ConfigureApplication()
+    ;
+
+app.Run();

@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Extensions.DiagnosticSources;
 using Mowers.CleanArchitecture.Application.Contracts.Persistence;
 using Mowers.CleanArchitecture.Persistence.Repositories;
 
@@ -31,14 +33,23 @@ public static class PersistenceServiceRegistration
         };
 
         ConventionRegistry.Register("Custom conventions", conventions, x => true);
-        
+
+        var mongoSettings = configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>()!;
+
         return services
-                .Configure<MongoDbSettings>(configuration.GetSection("MongoDbSettings"))
-                .AddSingleton<IMongoClient>(provider => new MongoClient(provider.GetRequiredService<IOptions<MongoDbSettings>>().Value.ConnectionString))
+                .AddSingleton<IMongoClient>(provider =>
+                {
+                    var settings = MongoClientSettings.FromConnectionString(mongoSettings.ConnectionString);
+                    settings.ClusterConfigurator = cb => cb.Subscribe(new DiagnosticsActivityEventSubscriber());
+                    return new MongoClient(settings);
+                })
                 .AddSingleton<IMongoDatabase>(provider =>
-                    provider.GetRequiredService<IMongoClient>().GetDatabase(provider.GetRequiredService<IOptions<MongoDbSettings>>().Value.Database))
+                    provider.GetRequiredService<IMongoClient>().GetDatabase(mongoSettings.Database))
                 .AddSingleton<MongoDbRepository>()
                 .AddSingleton<IProcessingRepository, FileProcessingRepository>()
+                .AddHealthChecks()
+                .AddMongoDb(mongoSettings.ConnectionString, mongoSettings.Database, mongoSettings.Database, HealthStatus.Unhealthy, new []{"database", "MongoDb"})
+                .Services
             ;
     }
 }
