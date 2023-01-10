@@ -5,6 +5,25 @@
 
 An implementation of the mowers problem using clean architecture solution in C#.
 
+## How to run
+
+To run the application, you can use the docker-compose file provided. Clone the repository and run this command in the root folder:  
+
+```sh
+docker-compose up -d
+```
+
+It will setup the multi-container app **mowers-clean-architecture** composed of:
+- **mongo**: an instance of MongoDB
+- **api**: an instance of the API
+- **worker**: an instance of the Worker
+- **file_storage_volume**: a volume to store files to process
+- **mongo_data_volume**: a volume to store MongoDB data
+- **mongo_configdb_volume**: a volume to store MongoDB configdb
+- **mowers_network**: a network to connect the containers
+
+You can then open http://localhost:5000/swagger to interact with the API.
+
 ## Development process
 
 ### Version 0
