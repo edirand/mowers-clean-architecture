@@ -74,9 +74,9 @@ In the current version, for each run, the worker tries to get not completed file
 - [X] Add a worker to run file processing asynchronously
 - [X] Add command to run stored file processing
 - [x] Add a query to get not completed file processing 
+- [X] Add TUs
 - [ ] Add documentation
 - [ ] Add logs
 - [ ] Add metrics
 - [ ] Add opentelemetry 
-- [ ] Add TUs
 - [ ] Improve builds
