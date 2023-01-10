@@ -11,7 +11,8 @@ services:
     networks:
       - mowers_network
     volumes:
-      - mongo_volume:/data/db
+      - mongo_data_volume:/data/db
+      - mongo_configdb_volume:/data/configdb
 
   api: 
     image: ${DOCKER_REGISTRY-}api
@@ -44,9 +45,9 @@ services:
 
 volumes:
   file_storage_volume:
-  mongo_volume:
+  mongo_data_volume:
+  mongo_configdb_volume:
 
 networks:
   mowers_network:
     driver: bridge
-    
