@@ -15,8 +15,4 @@
       <ProjectReference Include="..\Mowers.CleanArchitecture.Domain\Mowers.CleanArchitecture.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Contracts\Infrastructure" />
-    </ItemGroup>
-
 </Project>
