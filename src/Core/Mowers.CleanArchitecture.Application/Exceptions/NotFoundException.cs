@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 
 namespace Mowers.CleanArchitecture.Application.Exceptions;
 
@@ -6,6 +7,7 @@ namespace Mowers.CleanArchitecture.Application.Exceptions;
 /// Represents errors that occur during application execution when a requested item does not exist.
 /// </summary>
 [Serializable]
+[ExcludeFromCodeCoverage]
 public class NotFoundException : Exception
 {
     /// <summary>
