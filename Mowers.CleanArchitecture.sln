@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Pe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mowers.CleanArchitecture.Infrastructure", "src\Infrastructure\Mowers.CleanArchitecture.Infrastructure\Mowers.CleanArchitecture.Infrastructure.csproj", "{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mower.CleanArchitecture.FileProcessorWorker", "src\API\Mower.CleanArchitecture.FileProcessorWorker\Mower.CleanArchitecture.FileProcessorWorker.csproj", "{5B257CE2-DB9E-4D6D-8965-61307D4289D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DCF03BED-AE30-4D0C-AD0C-C991F3A2D3C6} = {B1C40E99-83EB-43B9-A262-80E80E68E594}
@@ -96,5 +102,6 @@ Global
 		{70C5FCFB-E133-4E87-B027-0079AF1924E3} = {B1C40E99-83EB-43B9-A262-80E80E68E594}
 		{1EC532A8-AA05-4214-9E54-FD4C907F1E26} = {70C5FCFB-E133-4E87-B027-0079AF1924E3}
 		{0F7A3B3C-C3F7-4499-A801-AE8DB6E4909A} = {52F95FD1-9EF7-4AA8-B6EA-B1C831A19B5C}
+		{5B257CE2-DB9E-4D6D-8965-61307D4289D9} = {7D595064-9A68-42A3-9EAE-034EE4F85616}
 	EndGlobalSection
 EndGlobal
