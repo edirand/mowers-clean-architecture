@@ -90,13 +90,25 @@ The first version of the application, a console app that runs the processing of 
 
 In the current version, for each run, the worker tries to get not completed file processing and then runs it sequentially. A better solution is to use a messaging system like Kafka to trigger the worker when a file has been uploaded by the user. 
 
+### File validation
+
+For now, the files are not validated so an invalid file will just crash the application. A validation step should be add during the file processing to ensure that the application can correctly process it. An additional validation step could be added in the API to ensure that the user sent a not empty text file for example.
+
+### Exception handling
+
+In the application, the exception handling is very basic and should be improved for a better resiliency.
+
+### Add a web application
+
+During the early stages of the solution design, a Blazor web application was planned to allow users to interact easily with the API. It has not been developed yet and could be added in future version. 
+
 ## TODO
 
 - [X] Add a worker to run file processing asynchronously
 - [X] Add command to run stored file processing
 - [x] Add a query to get not completed file processing 
 - [X] Add TUs
-- [ ] Add documentation
+- [X] Add documentation
 - [ ] Add logs
 - [ ] Add metrics
 - [ ] Add opentelemetry 
