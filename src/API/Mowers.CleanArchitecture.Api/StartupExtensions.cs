@@ -62,9 +62,6 @@ public static class StartupExtensions
                 .AddHealthChecks()
                 .AddCheck("API", () => HealthCheckResult.Healthy(), new[] { "API" })
                 .Services
-                .AddHealthChecksUI(setup => setup.AddHealthCheckEndpoint("health", "/health"))
-                .AddInMemoryStorage()
-                .Services
             ;
     }
 
@@ -153,7 +150,6 @@ public static class StartupExtensions
             .UseHttpsRedirection()
             .UseProblemDetails()
             .UseRouting()
-            .UseEndpoints(builder => builder.MapHealthChecksUI())
             .UseOpenTelemetryPrometheusScrapingEndpoint()
             .UseCors("Open")
             .UseSwagger()
