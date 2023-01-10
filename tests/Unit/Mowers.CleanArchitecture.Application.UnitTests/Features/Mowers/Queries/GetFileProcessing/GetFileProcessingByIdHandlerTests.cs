@@ -27,6 +27,7 @@ public class GetFileProcessingByIdHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldLoadItemFromRepository()
     {
         var id = Guid.NewGuid();
@@ -35,6 +36,7 @@ public class GetFileProcessingByIdHandlerTests
     }
 
     [Fact]    
+    [Trait("Category", "UnitTest")]
     public async Task ShouldThrowExceptionWhenItemDoesNotExist()
     {
         _repositoryMock.Setup(x => x.GetById(It.IsAny<Guid>())).ReturnsAsync((FileProcessing?)null);
@@ -42,6 +44,7 @@ public class GetFileProcessingByIdHandlerTests
     }
 
     [Fact]
+    [Trait("Category", "UnitTest")]
     public async Task ShouldReturnFileProcessingResultWhenItemExists()
     {
         var result = await Act();
