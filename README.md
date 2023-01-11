@@ -34,15 +34,15 @@ It will setup the multi-container app **mowers-clean-architecture** composed of:
 
 ## Getting started
 
-Runs the docker-compose file (see: [How to run](#how-to-run)).
+Run the docker-compose file (see: [How to run](#how-to-run)).
 
-The component should have been created. Open http://localhost:5002/healthchecks-ui to see the health of the main components. The components should be healthy.
+The components should have been created. Open http://localhost:5002/healthchecks-ui to see the health of the main components. The components should be healthy.
 
 Open http://localhost:5000/swagger to interact with the API and upload a file using the *POST /api/v2/fileprocessing* route. You can find an example of file to import in the API in the [exercise statement](docs/01_exercise_statement.md). Copy the ID returned in the response and use it with the *GET /api/v2/fileprocessing/{id}* route. You should see the result of the file processing.
 
 You can open http://localhost:16686 to open Jaeger and see traces.
 
-You can open http://localhost:9090 to open Prometheus and see traces (see [metrics](./docs/02_metrics.md) to see the available metrics).
+You can open http://localhost:9090 to open Prometheus and see metrics (see [metrics](./docs/02_metrics.md) to see the available metrics).
 
 
 ## Development process
@@ -132,7 +132,7 @@ The docker-compose file in this repository will create configured instances for 
 
 ![healthchecks](./docs/imgs/healthchecks.jpg)
 
-Both the API and the FileProcessing worker uses health checks, exposed on a specific endpoint: */health*. The health check results are formatted to be collected by HealthChecks-UI. 
+Both the API and the FileProcessing worker use health checks, exposed on a specific endpoint: */health*. The health check results are formatted to be collected by HealthChecks-UI. 
 
 The docker-compose file in this repository will create a configured instance of HealthChecks-UI so that the health checks results are automatically available.
 
