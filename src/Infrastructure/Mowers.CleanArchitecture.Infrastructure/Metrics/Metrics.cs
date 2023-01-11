@@ -27,7 +27,7 @@ public class Metrics
         MeterName = meterName;
         _processingDurationHistogram = meter.CreateHistogram<float>($"{context}_file-processing-duration","ms", description:"File processing duration in ms");
         _processingCounter = meter.CreateCounter<int>($"{context}_file-processing-counter", description: "Files processed since last restart");
-        _processingErrorsCounter = meter.CreateCounter<int>($"{context}_file-processing-error-counter", "File processing errors since last restart");
+        _processingErrorsCounter = meter.CreateCounter<int>($"{context}_file-processing-error-counter", description:"File processing errors since last restart");
     }
 
     /// <summary>
