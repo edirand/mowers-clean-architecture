@@ -130,7 +130,7 @@ public static class StartupExtensions
                         .SetResourceBuilder(resourceBuilder)
                         .AddAspNetCoreInstrumentation(i =>
                             i.Filter = (_, context) => !string.IsNullOrWhiteSpace(context.Request.Path.Value)
-                                                       && context.Request.Path.Value.Contains("health",
+                                                       && !context.Request.Path.Value.Contains("health",
                                                            StringComparison.InvariantCultureIgnoreCase)
                         )
                         .AddPrometheusExporter()
