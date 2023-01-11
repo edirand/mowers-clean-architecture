@@ -7,4 +7,5 @@ scrape_configs:
     static_configs:
       - targets: 
         - "worker:5001"
+        - "api:80"
         - "localhost:9090"
