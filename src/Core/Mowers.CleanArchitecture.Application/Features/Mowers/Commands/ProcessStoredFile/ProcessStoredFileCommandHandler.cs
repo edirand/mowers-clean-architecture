@@ -41,13 +41,24 @@ public class ProcessStoredFileCommandHandler : IRequestHandler<ProcessStoredFile
     {
         var processing = await _processingRepository.GetById(request.Id);
         if (processing == null) throw new NotFoundException(nameof(FileProcessing), request.Id);
-
-        var data = _fileStorage.Load(processing.FilePath);
-        var result = await _handler.Handle(new ProcessFileCommand(data), cancellationToken);
-        processing.Completed = true;
-        processing.UpdatedAt = DateTime.Now;
-        processing.Mowers = result.Mowers;
-        await _processingRepository.Update(processing);
+        
+        try
+        {
+            var data = _fileStorage.Load(processing.FilePath);
+            var result = await _handler.Handle(new ProcessFileCommand(data), cancellationToken);
+            processing.Completed = true;
+            processing.UpdatedAt = DateTime.Now;
+            processing.Mowers = result.Mowers;
+            await _processingRepository.Update(processing);
+        }
+        catch (Exception e)
+        {
+            processing.Completed = true;
+            processing.UpdatedAt = DateTime.Now;
+            processing.Success = false;
+            await _processingRepository.Update(processing);
+            throw new FileProcessingException(nameof(FileProcessing), request.Id, e);
+        }
         
         return Unit.Value;
     }

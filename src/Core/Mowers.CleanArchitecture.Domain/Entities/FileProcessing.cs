@@ -32,4 +32,9 @@ public class FileProcessing : IEntity
     /// The processing result containing mowers final position and orientation. 
     /// </summary>
     public IEnumerable<string> Mowers{get; set; }
+    
+    /// <summary>
+    /// Indicates if the processing succeeded.
+    /// </summary>
+    public bool Success { get; set; }
 }

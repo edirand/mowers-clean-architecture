@@ -33,6 +33,6 @@ public class GetFileProcessingByIdQueryHandler : IRequestHandler<GetFileProcessi
         var item = await _processingRepository.GetById(request.Id);
         if (item == null) throw new NotFoundException(nameof(FileProcessing), request.Id);
 
-        return new FileProcessingResult(item.Id, item.Completed, item.Mowers, item.CreatedAt, item.UpdatedAt);
+        return new FileProcessingResult(item.Id, item.Completed, item.Mowers, item.CreatedAt, item.UpdatedAt, item.Success);
     }
 }

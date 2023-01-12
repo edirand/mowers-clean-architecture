@@ -6,6 +6,8 @@ public class FileProcessing
     
     public bool Completed { get; set; }
     
+    public bool Success { get; set; }
+    
     public IEnumerable<string> Mowers { get; set; }
     
     public DateTime CreatedAt { get; set; }
