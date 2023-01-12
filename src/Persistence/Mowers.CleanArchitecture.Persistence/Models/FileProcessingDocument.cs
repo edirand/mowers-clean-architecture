@@ -17,6 +17,11 @@ public class FileProcessingDocument : MongoDocument
     /// Indicates if the processing is completed.
     /// </summary>
     public bool Completed { get; set; }
+    
+    /// <summary>
+    /// Indicates if the processing succeeded.
+    /// </summary>
+    public bool Success { get; set; }
 
     /// <summary>
     /// The processing result containing mowers final position and orientation. 
