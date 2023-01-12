@@ -49,6 +49,7 @@ public class ProcessStoredFileCommandHandler : IRequestHandler<ProcessStoredFile
             processing.Completed = true;
             processing.UpdatedAt = DateTime.Now;
             processing.Mowers = result.Mowers;
+            processing.Success = true;
             await _processingRepository.Update(processing);
         }
         catch (Exception e)
